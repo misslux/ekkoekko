@@ -43,6 +43,16 @@
     </div>
     <!-- /Callout -->
 
+    {% for i in range(0, len) %}
+    <div class="col-md-4 text-center">
+      <div class="portfolio-item">
+        <a href="#"><img class="img-portfolio img-responsive" src={{items[i]}}></a>
+        <h4>{{description[i]}}</h4>
+        <button type="button" class="btn btn-outline-info" >认领</button>
+      </div>
+    </div>
+    {% endfor %}
+
     <!-- /found -->
     <div id="" class="">
       <div class="container">
@@ -55,14 +65,14 @@
         <div class="row">
           <div class="col-md-4 col-md-offset-2 text-center">
             <div class="portfolio-item">
-              <a href="#"><img class="img-portfolio img-responsive" src="img/iPhone.jpg"></a>
+              <a href="#"><img class="img-portfolio img-responsive" src="../img/iPhone.jpg"></a>
               <h4>描述：爱疯13XXX</h4>
               <button type="button" class="btn btn-outline-info" >认领</button>
             </div>
           </div>
           <div class="col-md-4 text-center">
             <div class="portfolio-item">
-              <a href="#"><img class="img-portfolio img-responsive" src="img/mi.jpg"></a>
+              <a href="#"><img class="img-portfolio img-responsive" src="../img/mi.jpg"></a>
               <h4>描述：xxxxxx</h4>
               <button type="button" class="btn btn-outline-info" >认领</button>
             </div>
@@ -71,14 +81,14 @@
         <div class="row">
           <div class="col-md-4 col-md-offset-2 text-center">
             <div class="portfolio-item">
-              <a href="#"><img class="img-portfolio img-responsive" src="img/latiao.jpg"></a>
+              <a href="#"><img class="img-portfolio img-responsive" src="../img/latiao.jpg"></a>
               <h4>描述：xxxxxx</h4>
               <button type="button" class="btn btn-outline-info" >认领</button>
             </div>
           </div>
           <div class="col-md-4 text-center">
             <div class="portfolio-item">
-              <a href="#"><img class="img-portfolio img-responsive" src="img/rolex.jpg"></a>
+              <a href="#"><img class="img-portfolio img-responsive" src="../img/rolex.jpg"></a>
               <h4>描述：xxxxxx</h4>
               <button type="button" class="btn btn-outline-info" >认领</button>
             </div>
@@ -106,7 +116,7 @@
           </div>
           <div class="col-md-4 text-center">
             <div class="portfolio-item">
-              <a href="#"><img class="img-portfolio img-responsive" src="img/mi.jpg"></a>
+              <a href="#"><img class="img-portfolio img-responsive" src="../img/mi.jpg"></a>
               <h4>描述：xxxxxx</h4>
             </div>
           </div>
@@ -114,13 +124,13 @@
         <div class="row">
           <div class="col-md-4 col-md-offset-2 text-center">
             <div class="portfolio-item">
-              <a href="#"><img class="img-portfolio img-responsive" src="img/latiao.jpg"></a>
+              <a href="#"><img class="img-portfolio img-responsive" src="../img/latiao.jpg"></a>
               <h4>描述：xxxxxx</h4>
             </div>
           </div>
           <div class="col-md-4 text-center">
             <div class="portfolio-item">
-              <a href="#"><img class="img-portfolio img-responsive" src="img/rolex.jpg"></a>
+              <a href="#"><img class="img-portfolio img-responsive" src="../img/rolex.jpg"></a>
               <h4>描述：xxxxxx</h4>
             </div>
           </div>
