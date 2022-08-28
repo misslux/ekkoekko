@@ -13,11 +13,19 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
 def allowed_file(filename):
 	return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+def getFoundItems():
+    return
+
+def getLostItems():
+    return
 	
 @app.route('/')
 def homepage():
-    items = ['static/img/iPhone.jpg','static/img/rolex.jpg']
-    description=['Iphone手机','手表']
+    items = ['static/img/iPhone.jpg','static/img/rolex.jpg', 
+             'static/img/mi.jpg', 'static/img/latiao.jpg',
+             'static/img/latiao.jpg']
+    description=['Iphone手机','手表', '小米手机', '辣条', '辣条']
     return render_template('index.html',len=len(items), items=items, description=description)
 
 # @app.route('/', methods=['POST'])
