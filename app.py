@@ -1,5 +1,6 @@
 from flask import Flask, render_template,flash, request, redirect, url_for
 import os
+import pandas as pd
 
 # PEOPLE_FOLDER = os.path.join('static', 'people_photo')
 
@@ -15,17 +16,17 @@ def allowed_file(filename):
 	return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def getFoundItems():
-    return
+    df = pd.read_csv('static/lost_items.csv')
+    return df.Image.values, df.Description.values
 
 def getLostItems():
-    return
+    df = pd.read_csv('static/lost_items.csv')
+    return df.Image.values, df.Description.values
 	
 @app.route('/')
 def homepage():
-    items = ['static/img/iPhone.jpg','static/img/rolex.jpg', 
-             'static/img/mi.jpg', 'static/img/latiao.jpg',
-             'static/img/latiao.jpg']
-    description=['Iphone手机','手表', '小米手机', '辣条', '辣条']
+    items, description = getLostItems()
+    items = ['static/img/'+i for i in items]
     return render_template('index.html',len=len(items), items=items, description=description)
 
 # @app.route('/', methods=['POST'])
@@ -53,4 +54,5 @@ def homepage():
 # 	return redirect(url_for('static', filename='images/' + filename), code=301)
 
 if __name__ == "__main__":
+
     app.run()
