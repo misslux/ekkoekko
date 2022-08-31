@@ -16,8 +16,8 @@ def allowed_file(filename):
 	return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def getFoundItems():
-    df = pd.read_csv('static/lost_items.csv')
-    return df.Image.values, df.Description.values
+    df = pd.read_csv('static/found_items.csv')
+    return df.to_dict(orient='records')
 
 def getLostItems():
     df = pd.read_csv('static/lost_items.csv')
@@ -25,8 +25,9 @@ def getLostItems():
 	
 @app.route('/')
 def homepage():
-    records = getLostItems()
-    return render_template('index.html',lost=records, found=records, lost_length=len(records), found_length=len(records))
+    found_items = getFoundItems()
+    lost_items = getLostItems()
+    return render_template('index.html',lost=lost_items, found=found_items, lost_length=len(lost_items), found_length=len(found_items))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

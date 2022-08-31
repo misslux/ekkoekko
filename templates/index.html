@@ -59,14 +59,14 @@
             <div class="portfolio-item">
               <a href="#"><img class="img-portfolio img-responsive" src="{{url_for('static', filename='img/'+found[2*i]['Image'])}}"></a>
               <h4>{{found[2*i]['Description']}}</h4>
-              <button type="button" class="btn btn-outline-info" name=>认领</button>
+              <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#myOutput{{ found[2*i]['ID'] }}" >认领</button>
             </div>
           </div>
           <div class="col-md-4 text-center">
             <div class="portfolio-item">
               <a href="#"><img class="img-portfolio img-responsive" src="{{url_for('static', filename='img/'+found[2*i+1]['Image'])}}"></a>
               <h4>{{found[2*i+1]['Description']}}</h4>
-              <button type="button" class="btn btn-outline-info" >认领</button>
+              <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#myOutput{{ found[2*i+1]['ID'] }}" >认领</button>
             </div>
           </div>
         </div>
@@ -79,7 +79,7 @@
             <div class="portfolio-item">
               <a href="#"><img class="img-portfolio img-responsive" src="{{url_for('static', filename='img/'+found[found_length-1]['Image'])}}"></a>
               <h4>{{found[found_length-1]['Description']}}</h4>
-              <button type="button" class="btn btn-outline-info">认领</button>
+              <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#myOutput{{ found[found_length-1]['ID'] }}" >认领</button>
             </div>
           </div>
           </div>
@@ -89,6 +89,30 @@
       </div>
     </div>
     <!-- /found -->
+
+    {% for f in found %}
+    <!-- Modal -->
+     <div class="modal fade" id="myOutput{{ f['ID'] }}" role="dialog">
+       <div class="modal-dialog modal-lg">
+   
+         <!-- Modal content-->
+         <div class="modal-content">
+           <div class="modal-header">
+             <button type="button" class="close" data-dismiss="modal">&times;</button>
+             <h4 class="modal-title">Contact</h4>
+           </div>
+           <div class="modal-body">
+             <p>Name: {{ f['Contact Name'] }}</p>
+             <p>Phone: {{ f['Contact Phone'] }}</p>
+           </div>
+           <div class="modal-footer">
+             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+           </div>
+         </div>
+   
+       </div>
+     </div>
+   {% endfor %}
 
     <!-- /lost -->
     <div id="" class="">
@@ -205,6 +229,14 @@
           }
         });
       });
+    </script>
+    
+    <script>
+        function aPassValueFunction(obj){
+            let valuefromID = obj.id;
+            $('#hidden_input').val(valuefromID);
+            $("#confirm-modal").modal("show");
+        }
     </script>
 
   </body>
