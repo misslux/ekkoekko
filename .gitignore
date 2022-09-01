@@ -2,3 +2,5 @@
 __pycache__
 launch.json
 .DS_Store
+venv_python_competition
+.vscode
