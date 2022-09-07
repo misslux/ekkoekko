@@ -38,6 +38,30 @@ def homepage():
     lost_items = getLostItems()
     return render_template('index.html',lost=lost_items, found=found_items, lost_length=len(lost_items), found_length=len(found_items))
 
+@app.route('/modify_found', methods=['POST'])
+def modify_found():
+    id = request.form['id']
+    description = request.form['Description']
+    contact_phone = request.form['Contact Phone']
+    print('modify found item', id, description, contact_phone)
+    df = pd.read_csv('static/found_items.csv')
+    df.loc[df.ID == int(id), 'Description'] = description
+    df.loc[df.ID == int(id), 'Contact Phone'] = contact_phone
+    df.to_csv('static/found_items.csv', index=False)
+    return redirect(f"/my/{session['user_info']}")
+
+@app.route('/modify_lost', methods=['POST'])
+def modify_lost():
+    id = request.form['id']
+    description = request.form['Description']
+    contact_phone = request.form['Contact Phone']
+    print('modify lost item', id, description, contact_phone)
+    df = pd.read_csv('static/lost_items.csv')
+    df.loc[df.ID == int(id), 'Description'] = description
+    df.loc[df.ID == int(id), 'Contact Phone'] = contact_phone
+    df.to_csv('static/lost_items.csv', index=False)
+    return redirect(f"/my/{session['user_info']}")
+
 @app.route('/delete_found', methods=['POST'])
 def delete_found():
     id = request.form['id']
