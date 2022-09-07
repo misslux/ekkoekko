@@ -1,3 +1,4 @@
+from crypt import methods
 from flask import Flask, render_template, flash, request, redirect, url_for, session
 import os
 import pandas as pd
@@ -18,12 +19,16 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-def getFoundItems():
+def getFoundItems(name=None):
     df = pd.read_csv('static/found_items.csv')
+    if name is not None:
+        df = df.loc[df['Contact Name']==name]
     return df.to_dict(orient='records')
 
-def getLostItems():
+def getLostItems(name=None):
     df = pd.read_csv('static/lost_items.csv')
+    if name is not None:
+        df = df.loc[df['Contact Name']==name]
     return df.to_dict(orient='records')
 
 
@@ -33,6 +38,47 @@ def homepage():
     lost_items = getLostItems()
     return render_template('index.html',lost=lost_items, found=found_items, lost_length=len(lost_items), found_length=len(found_items))
 
+@app.route('/modify_found', methods=['POST'])
+def modify_found():
+    id = request.form['id']
+    description = request.form['Description']
+    contact_phone = request.form['Contact Phone']
+    print('modify found item', id, description, contact_phone)
+    df = pd.read_csv('static/found_items.csv')
+    df.loc[df.ID == int(id), 'Description'] = description
+    df.loc[df.ID == int(id), 'Contact Phone'] = contact_phone
+    df.to_csv('static/found_items.csv', index=False)
+    return redirect(f"/my/{session['user_info']}")
+
+@app.route('/modify_lost', methods=['POST'])
+def modify_lost():
+    id = request.form['id']
+    description = request.form['Description']
+    contact_phone = request.form['Contact Phone']
+    print('modify lost item', id, description, contact_phone)
+    df = pd.read_csv('static/lost_items.csv')
+    df.loc[df.ID == int(id), 'Description'] = description
+    df.loc[df.ID == int(id), 'Contact Phone'] = contact_phone
+    df.to_csv('static/lost_items.csv', index=False)
+    return redirect(f"/my/{session['user_info']}")
+
+@app.route('/delete_found', methods=['POST'])
+def delete_found():
+    id = request.form['id']
+    print('delete found item', id)
+    df = pd.read_csv('static/found_items.csv')
+    df = df.loc[df.ID != int(id)]
+    df.to_csv('static/found_items.csv', index=False)
+    return redirect(f"/my/{session['user_info']}")
+
+@app.route('/delete_lost', methods=['POST'])
+def delete_lost():
+    id = request.form['id']
+    print('delete lost item', id)
+    df = pd.read_csv('static/lost_items.csv')
+    df = df.loc[df.ID != int(id)]
+    df.to_csv('static/lost_items.csv', index=False)
+    return redirect(f"/my/{session['user_info']}")
 
 @app.route('/index')
 def index():
@@ -42,9 +88,12 @@ def index():
     return redirect('index')
 
 
-@app.route('/my')
-def my():
-    return render_template('my.html')
+@app.route('/my/')
+@app.route('/my/<name>')
+def my(name=None):
+    found_items = getFoundItems(name)
+    lost_items = getLostItems(name)
+    return render_template('my.html', lost=lost_items, found=found_items, lost_length=len(lost_items), found_length=len(found_items))
 
 
 @app.route('/myinfo')
@@ -62,9 +111,9 @@ def login():
         return render_template('login.html')
     user = request.form.get('form-username')
     pwd = request.form.get('form-password')
-    if user == 'admin' and pwd == '123':
+    if user == 'Xiao' and pwd == '123':
         session['user_info'] = user
-        return redirect('/my')
+        return redirect(f'/my/{user}')
     else:
         return render_template('login.html', msg='用户名or密码错误~~')
 
