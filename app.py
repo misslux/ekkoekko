@@ -18,12 +18,16 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-def getFoundItems():
+def getFoundItems(name=None):
     df = pd.read_csv('static/found_items.csv')
+    if name is not None:
+        df = df.loc[df['Contact Name']==name]
     return df.to_dict(orient='records')
 
-def getLostItems():
+def getLostItems(name=None):
     df = pd.read_csv('static/lost_items.csv')
+    if name is not None:
+        df = df.loc[df['Contact Name']==name]
     return df.to_dict(orient='records')
 
 
@@ -42,9 +46,12 @@ def index():
     return redirect('index')
 
 
-@app.route('/my')
-def my():
-    return render_template('my.html')
+@app.route('/my/')
+@app.route('/my/<name>')
+def my(name=None):
+    found_items = getFoundItems(name)
+    lost_items = getLostItems(name)
+    return render_template('my.html', lost=lost_items, found=found_items, lost_length=len(lost_items), found_length=len(found_items))
 
 
 @app.route('/myinfo')
@@ -62,9 +69,9 @@ def login():
         return render_template('login.html')
     user = request.form.get('form-username')
     pwd = request.form.get('form-password')
-    if user == 'admin' and pwd == '123':
+    if user == 'Xiao' and pwd == '123':
         session['user_info'] = user
-        return redirect('/my')
+        return redirect(f'/my/{user}')
     else:
         return render_template('login.html', msg='用户名or密码错误~~')
 

@@ -45,21 +45,41 @@
               <hr>
             </div>
           </div>
+          {% for i in range(0, found_length//2) %}
           <div class="row">
             <div class="col-md-4 col-md-offset-2 text-center">
-              
               <div class="portfolio-item">
-                <a href="#"><img class="img-portfolio img-responsive" src="../static/img/items/iPhone.jpg"></a>
-                <h4>描述：爱疯13XXX</h4>
+                <a href="#"><img class="img-portfolio img-responsive" src="{{url_for('static', filename='img/items/'+found[2*i]['Image'])}}"></a>
+                <h4>{{found[2*i]['Description']}}</h4>
+                <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#myOutput{{ found[2*i]['ID'] }}" >修改</button>
+                <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#myOutput{{ found[2*i]['ID'] }}" >删除</button>
               </div>
             </div>
             <div class="col-md-4 text-center">
               <div class="portfolio-item">
-                <a href="#"><img class="img-portfolio img-responsive" src="../static/img/items/mi.jpg"></a>
-                <h4>描述：xxxxxx</h4>
+                <a href="#"><img class="img-portfolio img-responsive" src="{{url_for('static', filename='img/items/'+found[2*i+1]['Image'])}}"></a>
+                <h4>{{found[2*i+1]['Description']}}</h4>
+                <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#myOutput{{ found[2*i+1]['ID'] }}" >修改</button>
+                <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#myOutput{{ found[2*i+1]['ID'] }}" >删除</button>
               </div>
             </div>
           </div>
+          {% endfor %}
+  
+          {% if found_length%2==1 %}
+  
+          <div class="row">
+            <div class="col-md-4 col-md-offset-2 text-center">
+              <div class="portfolio-item">
+                <a href="#"><img class="img-portfolio img-responsive" src="{{url_for('static', filename='img/items/'+found[found_length-1]['Image'])}}"></a>
+                <h4>{{found[found_length-1]['Description']}}</h4>
+                <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#myOutput{{ found[found_length-1]['ID'] }}" >修改</button>
+                <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#myOutput{{ found[found_length-1]['ID'] }}" >删除</button>
+              </div>
+            </div>
+            </div>
+  
+          {% endif %}
         </div>
       </div>
 
@@ -72,20 +92,44 @@
               <hr>
             </div>
           </div>
+
+          {% for i in range(0, lost_length//2) %}
           <div class="row">
             <div class="col-md-4 col-md-offset-2 text-center">
               <div class="portfolio-item">
-                <a href="#"><img class="img-portfolio img-responsive" src="../static/img/items/iPhone.jpg"></a>
-                <h4>描述：xxxxxx</h4>
+                <a href="#"><img class="img-portfolio img-responsive" src="{{url_for('static', filename='img/items/'+lost[2*i]['Image'])}}"></a>
+                <h4>{{lost[2*i]['Description']}}</h4>
+                <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#myOutput{{ lost[2*i]['ID'] }}" >修改</button>
+                <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#myOutput{{ lost[2*i]['ID'] }}" >删除</button>
+
               </div>
             </div>
             <div class="col-md-4 text-center">
               <div class="portfolio-item">
-                <a href="#"><img class="img-portfolio img-responsive" src="../static/img/items/mi.jpg"></a>
-                <h4>描述：xxxxxx</h4>
+                <a href="#"><img class="img-portfolio img-responsive" src="{{url_for('static', filename='img/items/'+lost[2*i+1]['Image'])}}"></a>
+                <h4>{{lost[2*i+1]['Description']}}</h4>
+                <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#myOutput{{ lost[2*i+1]['ID'] }}" >修改</button>
+                <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#myOutput{{ lost[2*i+1]['ID'] }}" >删除</button>
               </div>
             </div>
           </div>
+          {% endfor %}
+  
+          {% if lost_length%2==1 %}
+  
+          <div class="row">
+            <div class="col-md-4 col-md-offset-2 text-center">
+              <div class="portfolio-item">
+                <a href="#"><img class="img-portfolio img-responsive" src="{{url_for('static', filename='img/items/'+lost[lost_length-1]['Image'])}}"></a>
+                <h4>{{lost[lost_length-1]['Description']}}</h4>
+                <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#myOutput{{ lost[lost_length-1]['ID'] }}" >修改</button>
+                <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#myOutput{{ lost[lost_length-1]['ID'] }}" >删除</button>
+              </div>
+            </div>
+            </div>
+  
+          {% endif %}
+
         </div>
       </div>
       <!-- /lost -->
