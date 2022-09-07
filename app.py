@@ -1,3 +1,4 @@
+from crypt import methods
 from flask import Flask, render_template, flash, request, redirect, url_for, session
 import os
 import pandas as pd
@@ -37,6 +38,23 @@ def homepage():
     lost_items = getLostItems()
     return render_template('index.html',lost=lost_items, found=found_items, lost_length=len(lost_items), found_length=len(found_items))
 
+@app.route('/delete_found', methods=['POST'])
+def delete_found():
+    id = request.form['id']
+    print('delete found item', id)
+    df = pd.read_csv('static/found_items.csv')
+    df = df.loc[df.ID != int(id)]
+    df.to_csv('static/found_items.csv', index=False)
+    return redirect(f"/my/{session['user_info']}")
+
+@app.route('/delete_lost', methods=['POST'])
+def delete_lost():
+    id = request.form['id']
+    print('delete lost item', id)
+    df = pd.read_csv('static/lost_items.csv')
+    df = df.loc[df.ID != int(id)]
+    df.to_csv('static/lost_items.csv', index=False)
+    return redirect(f"/my/{session['user_info']}")
 
 @app.route('/index')
 def index():
