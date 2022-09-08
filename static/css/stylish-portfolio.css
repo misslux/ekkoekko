@@ -142,16 +142,25 @@ body {
   background-size: cover;
 }
 
+.photosize {
+  float: left;
+  width: 200px;
+  height: 90px;
+  margin: 5px;
+
+
+}
+
 .headerhalf {
   display: table;
   height:30%;
   width: 100%;
   position: relative;
-  background: url('../img/bg.jpg') no-repeat center center fixed; 
-  -webkit-background-size: cover;
+  background: url('../img/bg.jpg') 
+  /* -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
-  background-size: cover;
+  background-size: cover; */
 }
 
 
@@ -210,6 +219,10 @@ i.service-icon {
 }
 
 .img-portfolio {
+  display: block;
+  width: 100%;
+  height: 100%;
+  float: top;
   margin: 0 auto;
 }
 

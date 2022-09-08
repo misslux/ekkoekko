@@ -34,12 +34,19 @@ def homepage():
     return render_template('index.html',lost=lost_items, found=found_items, lost_length=len(lost_items), found_length=len(found_items))
 
 
-@app.route('/index')
-def index():
-    user_info = session.get('user_info')
-    if not user_info:
-        return redirect('/login')
-    return redirect('index')
+@app.route('/loggedinIndex')
+def loggedIndex():
+    found_items = getFoundItems()
+    lost_items = getLostItems()
+    return render_template('loggedinIndex.html', lost=lost_items, found=found_items, lost_length=len(lost_items),found_length=len(found_items))
+
+
+# @app.route('/index')
+# def index():
+#     user_info = session.get('user_info')
+#     if not user_info:
+#         return redirect('/login')
+#     return redirect('index')
 
 
 @app.route('/my')
@@ -49,7 +56,9 @@ def my():
 
 @app.route('/myinfo')
 def myinfo():
-    return render_template('myinfo.html')
+    user_info = session.get('user_info')
+    if user_info:
+        return render_template('myinfo.html')
 
 
 @app.route('/surprise')
@@ -64,7 +73,7 @@ def login():
     pwd = request.form.get('form-password')
     if user == 'admin' and pwd == '123':
         session['user_info'] = user
-        return redirect('/my')
+        return redirect('/loggedinIndex')
     else:
         return render_template('login.html', msg='用户名or密码错误~~')
 
@@ -100,6 +109,7 @@ def logout():
 # def display_image(filename):
 # 	#print('display_image filename: ' + filename)
 # 	return redirect(url_for('static', filename='images/' + filename), code=301)
+
 
 if __name__ == "__main__":
     app.run()
