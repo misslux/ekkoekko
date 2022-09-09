@@ -1,12 +1,14 @@
+import dateutil.utils
 from flask import Flask, render_template, flash, request, redirect, url_for, session
 import os
 import pandas as pd
+from datetime import date
 
 # PEOPLE_FOLDER = os.path.join('static', 'people_photo')
 
 app = Flask(__name__)
 app.secret_key = "siemens"
-app.config['UPLOAD_FOLDER'] = 'static/images'
+app.config['UPLOAD_FOLDER'] = 'static/img/items'
 app.secret_key = 'QWERTYUIOP'
 
 from werkzeug.utils import secure_filename
@@ -78,6 +80,33 @@ def delete_lost():
     df = df.loc[df.ID != int(id)]
     df.to_csv('static/lost_items.csv', index=False)
     return redirect(f"/my/{session['user_info']}")
+
+@app.route('/add_lost', methods=['POST'])
+def add_lost():
+    des = str(request.form['descriptionLost'])
+    contact = str(request.form['contactLost'])
+    file = request.files['uploadImageLost']
+    filename = secure_filename(file.filename)
+    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    flash('Image successfully uploaded and displayed below')
+    df = pd.read_csv('static/lost_items.csv')
+    df.loc[len(df)+1] = [len(df)+2, filename, des, date.today().strftime('%Y-%m-%d'), session['user_info'], contact]
+    df.to_csv('static/lost_items.csv', index=False)
+    return redirect(f"/my/{session['user_info']}")
+
+@app.route('/add_found')
+def add_found():
+    des = str(request.form['descriptionFound'])
+    contact = str(request.form['contactFound'])
+    file = request.files['uploadImageFound']
+    filename = secure_filename(file.filename)
+    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    flash('Image successfully uploaded and displayed below')
+    df = pd.read_csv('static/lost_items.csv')
+    df.loc[len(df)+1] = [len(df)+2, filename, des, date.today().strftime('%Y-%m-%d'), session['user_info'], contact]
+    df.to_csv('static/lost_items.csv', index=False)
+    return redirect(f"/my/{session['user_info']}")
+
 
 @app.route('/loggedinIndex')
 def loggedIndex():

@@ -135,7 +135,7 @@ body {
   height: 100%;
   width: 100%;
   position: relative;
-  background: url('../img/backgroud.jpg') no-repeat center center fixed; 
+  background: url('../img/background.jpg') no-repeat center center fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -194,6 +194,9 @@ i.service-icon {
   text-align: center;
 }
 
+.fontColor {
+  color:#7fbbda
+}
 /* Callout */
 
 .callout {
